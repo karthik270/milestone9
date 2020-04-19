@@ -4,6 +4,16 @@ class CustomersController < ApplicationController
     def index
         render plain: Customer.order(:id).map{|customer| customer.to_pleasant_string}.join("\n")
     end
+    def login
+        login_id = params[:login_id]
+        password = params[:password]
+        customer = Customer.find_by "login_id = ? and password = ?", login_id, password
+        if (customer)
+          render plain: "true"
+        else
+          render plain: "false"
+        end
+    end
     def create
         login_id = params[:login_id]
         password = params[:password]
